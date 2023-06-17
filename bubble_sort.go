@@ -68,7 +68,7 @@ func bubble_sort(arr []int) {
     for swapped {
         // Assume sorted to begin with. May change during loop.
         swapped = false
-        // Check next element, swap if necessary
+        // Check next element, swap if necessary.
         for i := 0; i < l-1; i++ {
             if arr[i] > arr[i+1] {
                 arr[i], arr[i+1] = arr[i+1], arr[i]

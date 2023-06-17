@@ -64,12 +64,11 @@ func check_sorted(arr []int) {
 func bubble_sort(arr []int) {
     // If we had to swap, the array is not sorted yet.
     swapped := true
-    l := len(arr)
     for swapped {
         // Assume sorted to begin with. May change during loop.
         swapped = false
         // Check next element, swap if necessary.
-        for i := 0; i < l-1; i++ {
+        for i,l := 0, len(arr); i < l-1; i++ {
             if arr[i] > arr[i+1] {
                 arr[i], arr[i+1] = arr[i+1], arr[i]
                 swapped = true

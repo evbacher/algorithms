@@ -7,7 +7,6 @@ import (
     "time")
 
 func main() {
-    rand.Seed(time.Now().UnixNano())
 
     // Get the number of items and maximum item value.
     var num_items, max int;
@@ -32,6 +31,7 @@ func main() {
 func make_random_array(num_items, max int) []int {
     arr := make([]int, num_items)
     rand.Seed(time.Now().UnixNano())
+    
     for i := 0; i < num_items; i++ {
         arr[i] = rand.Intn(max)
     }
@@ -49,10 +49,6 @@ func print_array(arr []int, num_items int) {
 }
 
 func check_sorted(arr []int) {
-    if len(arr) == 1 {
-        fmt.Println("The array is sorted.")
-        return
-    }
     for i := 0; i < len(arr)-1; i++ {
         if arr[i] <= arr[i+1] {
             continue
@@ -64,9 +60,9 @@ func check_sorted(arr []int) {
 }
 
 func bubble_sort(arr []int) {
-    l := len(arr)
     // If we had to swap, the array is not sorted yet.
     swapped := true
+    l := len(arr)
     for swapped {
         // Assume sorted to begin with. May change during loop.
         swapped = false
@@ -79,5 +75,3 @@ func bubble_sort(arr []int) {
         }
     }
 }
-
-

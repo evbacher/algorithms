@@ -68,6 +68,7 @@ func bubble_sort(arr []int) {
     // If we had to swap, the array is not sorted yet.
     swapped := true
     for swapped {
+        // Assume sorted to begin with. May change during loop.
         swapped = false
         // Check next element, swap if necessary
         for i := 0; i < l-1; i++ {
@@ -78,3 +79,5 @@ func bubble_sort(arr []int) {
         }
     }
 }
+
+

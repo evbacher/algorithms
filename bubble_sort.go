@@ -30,6 +30,8 @@ func main() {
 
 func make_random_array(num_items, max int) []int {
     arr := make([]int, num_items)
+    
+    // Seed the random number generator, otherwise it will generate the same set.
     rand.Seed(time.Now().UnixNano())
     
     for i := 0; i < num_items; i++ {
@@ -75,3 +77,5 @@ func bubble_sort(arr []int) {
         }
     }
 }
+
+

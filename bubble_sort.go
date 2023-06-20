@@ -1,4 +1,7 @@
 
+// Implementation of bubble sort algorithm and a couple
+// of related utility functions.
+
 package main
 
 import (
@@ -17,19 +20,19 @@ func main() {
     fmt.Scanln(&max)
 
     // Make and display the unsorted array.
-    arr := makeRandomArray(numItems, max)
-    printArray(arr, 40)
+    arr := makeRandomSlice(numItems, max)
+    printSlice(arr, 40)
     fmt.Println()
 
     // Sort and display the result.
     bubbleSort(arr)
-    printArray(arr, 40)
+    printSlice(arr, 40)
 
     // Verify that it's sorted.
     checkSorted(arr)
 }
 
-func makeRandomArray(numItems, max int) []int {
+func makeRandomSlice(numItems, max int) []int {
     arr := make([]int, numItems)
     
     // Seed the random number generator, otherwise it will generate the same set.
@@ -41,7 +44,7 @@ func makeRandomArray(numItems, max int) []int {
     return arr
 }
 
-func printArray(arr []int, numItems int) {
+func printSlice(arr []int, numItems int) {
     if (len(arr) < numItems) {
         numItems = len(arr)
     }
@@ -77,5 +80,4 @@ func bubbleSort(arr []int) {
         }
     }
 }
-
 

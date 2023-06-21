@@ -17,21 +17,26 @@ import (
 
 func main() {
     
-    // Test array (from Programming Pearls, by Jon Bentley):
-    //arr := []int{55,41,59,26,53,58,97,93}
+    // Get the number of items and maximum item value.
+    var num_items, max int;
+    fmt.Printf("# Items: ")
+    fmt.Scanln(&num_items)
+    fmt.Printf("Max: ")
+    fmt.Scanln(&max)
     
-    // Create a random array and display up to 40 elements.
-    arr := makeRandomSlice(3, 1000000)
-    printSlice(arr, 40)
+    // Make and display the unsorted slice.
+    values := makeRandomSlice(num_items, max)
+    printSlice(values, 40)
     fmt.Println()
 
     // Sort and display the result.
-    quicksort(arr)
-    printSlice(arr, 40)
+    quicksort(values)
+    printSlice(values, 40)
 
     // Verify that it's sorted.
-    checkSorted(arr)
+    checkSorted(values)
 }
+
 
 // Sorts an array.
 // See Programming Pearls by Jon Bentley for a great discussion of
@@ -117,3 +122,4 @@ func checkSorted(arr []int) {
     }
     fmt.Println("The array is sorted")
 }
+

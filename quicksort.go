@@ -60,12 +60,14 @@ func quicksort(arr []int) {
 // Partitions an array (initial pivot is the first element arr[0]).
 // The goal of partitioning is to move all the values less than
 // or equal to the pivot value to the left side of the array.
-// When you're done, move the pivot value between the small and
-// large values (relative to the pivot).
+// When you're done, move the pivot value to a position between
+// the small and large value partitions.
 // Returns the final position of the pivot (middle).
 func partition(arr []int) int {
     lo, hi := 0, len(arr)-1
 
+    // Even though we're calling this middle, it starts out
+    // as the first position in the slice, where the pivot is.
     middle := lo
     pivot := arr[middle]
     for i := middle+1; i < hi+1; i++{

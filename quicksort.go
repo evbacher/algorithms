@@ -15,6 +15,9 @@ import (
     "time"
 )
 
+// For testing only, to see how deep the quicksort stack is.
+var qcount = 0
+
 func main() {
     
     // Get the number of items and maximum item value.
@@ -24,6 +27,14 @@ func main() {
     fmt.Printf("Max: ")
     fmt.Scanln(&max)
     
+    /*
+    // Already sorted array for testing.
+    values := make([]int, 1000)
+    for i := 0; i < 1000; i++ {
+        values[i] = i
+    }
+    */
+
     // Make and display the unsorted slice.
     values := makeRandomSlice(num_items, max)
     printSlice(values, 40)
@@ -35,6 +46,8 @@ func main() {
 
     // Verify that it's sorted.
     checkSorted(values)
+    
+    fmt.Println("qcount: ", qcount)
 }
 
 
@@ -42,6 +55,8 @@ func main() {
 // See Programming Pearls by Jon Bentley for a great discussion of
 // this algorithm.
 func quicksort(arr []int) {
+    
+    qcount++
 
     // If array has 0 or 1 elements, it's already sorted.
     if len(arr) < 2 {
@@ -65,27 +80,42 @@ func quicksort(arr []int) {
 // Returns the final position of the pivot (middle).
 func partition(arr []int) int {
     lo, hi := 0, len(arr)-1
+    
+    // Instead of always starting the pivot at the first element,
+    // we can use the median of the first, last, and middle element
+    // (as suggested by Sedgewick).
+    middle := (lo + hi) / 2
+    if arr[middle] > arr[hi] {
+        arr[middle], arr[hi] = arr[hi], arr[middle]
+    }
+    if arr[lo] > arr[hi] {
+        arr[lo], arr[hi] = arr[hi], arr[lo]
+    }
+    if arr[middle] > arr[lo] {
+        // Put the median-of-three value into arr[lo]
+        arr[middle], arr[lo] = arr[lo], arr[middle]
+    }
 
-    // Even though we're calling this middle, it starts out
+    // Even though we're calling this mid, it starts out
     // as the first position in the slice, where the pivot is.
-    middle := lo
-    pivot := arr[middle]
-    for i := middle+1; i < hi+1; i++{
+    mid := lo
+    pivot := arr[mid]
+    for i := mid+1; i < hi+1; i++{
         if arr[i] < pivot {
             
-            // Increment middle index, and swap the element now at the
-            // middle index with a[i], which we just tested. Note that,
+            // Increment mid index, and swap the element now at the
+            // mid index with a[i], which we just tested. Note that,
             // for the first iteration, the swap will just keep the element
             // where it is (at arr[1]). Also note that we are NOT moving the
             // pivot element yet.
-            middle++
-            arr[middle], arr[i] = arr[i], arr[middle]
+            mid++
+            arr[mid], arr[i] = arr[i], arr[mid]
         }
     }
     
-    // Now that all the partitioning is done we can move the pivot to the middle index.
-    arr[middle], arr[lo] = arr[lo], arr[middle]
-    return middle
+    // Now that all the partitioning is done we can move the pivot to the mid index.
+    arr[mid], arr[lo] = arr[lo], arr[mid]
+    return mid
 }
 
 // Returns a slice of numItems random ints, up to max.

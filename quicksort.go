@@ -86,13 +86,16 @@ func partition(arr []int) int {
     // (as suggested by Sedgewick).
     middle := (lo + hi) / 2
     if arr[middle] > arr[hi] {
+        // middle <= hi after swap.
         arr[middle], arr[hi] = arr[hi], arr[middle]
     }
     if arr[lo] > arr[hi] {
+        // middle <= hi  and lo <= hi after swap.
         arr[lo], arr[hi] = arr[hi], arr[lo]
     }
     if arr[middle] > arr[lo] {
         // Put the median-of-three value into arr[lo]
+        // lo >= middle and lo <= hi after swap.
         arr[middle], arr[lo] = arr[lo], arr[middle]
     }
 

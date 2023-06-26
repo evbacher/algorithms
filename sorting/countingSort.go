@@ -44,25 +44,30 @@ func main() {
 
 // Count the numPurchases for each Customer and sort by numPurchases.
 func countingSort(customers []Customer, max int) []Customer {
+    
+    // Create a slice that can hold max values.
     counts := make([]int, max+1)
 
+    // Increment the value at each index of counts to keep track of the number of
+    // customers for each value of numPurchases.
     l := len(customers)
     for i := 0; i < l; i++ {
         counts[customers[i].numPurchases]++
     }
 
-    // Adjust counts slice so that each index contains the number of items <= to the
+    // Now, adjust the counts slice so that each index contains the number of items <= to the
     // value at the current index. So we basically add all the previous values to
     // get the count at the current index. This gives us information about the order.
     for i := 1; i < len(counts); i++ {
         counts[i] += counts[i-1]
     }
 
+    // We create a new empty slice to assemble the sorted Customers.
     lenCustomers := len(customers)
     sorted := make([]Customer, lenCustomers)
     
-    // Rearrange sorted slice. Start at the back, so we preserve the relative order
-    // for duplicates.
+    // Populate the sorted slice. Start at the back, so we preserve the relative order
+    // for duplicate values of numPurchases.
     for j := lenCustomers-1; j >= 0; j-- {
         // Check the counts array for numPurchases of current Customer.
         countIndex := customers[j].numPurchases
@@ -105,7 +110,7 @@ func printSlice(arr []Customer, numItems int) {
 }
 
 
-// Checks to see if arr of Customers is sorted.
+// Checks to see if slice of Customers is sorted.
 func checkSorted(arr []Customer) {
     for i := 0; i < len(arr)-1; i++ {
         if arr[i].numPurchases <= arr[i+1].numPurchases {

@@ -1,5 +1,6 @@
 
-/* An implementation of counting sort. This works for a large number of items
+/* 
+An implementation of counting sort. This works for a large number of items
 that have a relatively small range of values.
 */
 
@@ -20,7 +21,6 @@ type Customer struct {
 func main() {
     
     // Get the number of items and maximum item value.
-
     var numItems, max int;
     fmt.Printf("# Items: ")
     fmt.Scanln(&numItems)
@@ -62,7 +62,7 @@ func countingSort(customers []Customer, max int) []Customer {
         counts[i] += counts[i-1]
     }
 
-    // We create a new empty slice to assemble the sorted Customers.
+    // Create a new empty slice to assemble the sorted Customers.
     lenCustomers := len(customers)
     sorted := make([]Customer, lenCustomers)
     

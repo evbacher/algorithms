@@ -96,8 +96,10 @@ func printSlice(arr []int, numItems int) {
     if (len(arr) < numItems) {
         numItems = len(arr)
     }
+    fmt.Print("[ ")
     for i := 0; i < numItems; i++ {
-        fmt.Print(arr[i], ", ")
+        fmt.Print(arr[i], " ")
     }
-    fmt.Println()
+    fmt.Print("]\n")
 }
+

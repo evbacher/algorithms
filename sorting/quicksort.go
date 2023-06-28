@@ -121,7 +121,7 @@ func partition(arr []int) int {
     return mid
 }
 
-// Returns a slice of numItems random ints, up to max.
+// Returns a slice of numItems random ints, values from 0 to max.
 func makeRandomSlice(numItems, max int) []int {
     // We are calling this an array, but it's actually a slice.
     arr := make([]int, numItems)

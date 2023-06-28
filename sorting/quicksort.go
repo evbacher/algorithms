@@ -51,7 +51,7 @@ func main() {
 }
 
 
-// Sorts an array.
+// Sorts an array (actually a slice of an array).
 // See Programming Pearls by Jon Bentley for a great discussion of
 // this algorithm.
 func quicksort(arr []int) {
@@ -158,3 +158,5 @@ func checkSorted(arr []int) {
     }
     fmt.Println("The array is sorted")
 }
+
+

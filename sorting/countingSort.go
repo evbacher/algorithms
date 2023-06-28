@@ -103,10 +103,11 @@ func printSlice(arr []Customer, numItems int) {
     if (len(arr) < numItems) {
         numItems = len(arr)
     }
+    fmt.Print("[ ")
     for i := 0; i < numItems; i++ {
-        fmt.Print(arr[i], ", ")
+        fmt.Print(arr[i], " ")
     }
-    fmt.Println()
+    fmt.Print("]\n")
 }
 
 
@@ -121,3 +122,4 @@ func checkSorted(arr []Customer) {
     }
     fmt.Println("The array is sorted")
 }
+

@@ -32,39 +32,7 @@ func main() {
     checkSorted(arr)
 }
 
-func makeRandomSlice(numItems, max int) []int {
-    arr := make([]int, numItems)
-    
-    // Seed the random number generator, otherwise it will generate the same set.
-    rand.Seed(time.Now().UnixNano())
-    
-    for i := 0; i < numItems; i++ {
-        arr[i] = rand.Intn(max)
-    }
-    return arr
-}
-
-func printSlice(arr []int, numItems int) {
-    if (len(arr) < numItems) {
-        numItems = len(arr)
-    }
-    for i := 0; i < numItems; i++ {
-        fmt.Print(arr[i], ", ")
-    }
-    fmt.Println()
-}
-
-func checkSorted(arr []int) {
-    for i := 0; i < len(arr)-1; i++ {
-        if arr[i] <= arr[i+1] {
-            continue
-        }
-        fmt.Println("The array is NOT sorted!")
-        return
-    }
-    fmt.Println("The array is sorted")
-}
-
+// Sort an array of integers.
 func bubbleSort(arr []int) {
     // If we had to swap, the array is not sorted yet.
     swapped := true
@@ -81,3 +49,39 @@ func bubbleSort(arr []int) {
     }
 }
 
+// Returns a slice of numItems random ints, up to max.
+func makeRandomSlice(numItems, max int) []int {
+    // We are calling this an array, but it's actually a slice.
+    arr := make([]int, numItems)
+    
+    // Seed the random number generator, otherwise it will generate the same set.
+    rand.Seed(time.Now().UnixNano())
+    
+    for i := 0; i < numItems; i++ {
+        arr[i] = rand.Intn(max)
+    }
+    return arr
+}
+
+// Prints the first numItems of the slice arr.
+func printSlice(arr []int, numItems int) {
+    if (len(arr) < numItems) {
+        numItems = len(arr)
+    }
+    for i := 0; i < numItems; i++ {
+        fmt.Print(arr[i], ", ")
+    }
+    fmt.Println()
+}
+
+// Checks to see if arr is sorted.
+func checkSorted(arr []int) {
+    for i := 0; i < len(arr)-1; i++ {
+        if arr[i] <= arr[i+1] {
+            continue
+        }
+        fmt.Println("The array is NOT sorted!")
+        return
+    }
+    fmt.Println("The array is sorted")
+}

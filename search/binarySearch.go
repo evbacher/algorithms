@@ -36,6 +36,8 @@ func main() {
     
     // Sort the array first (necessary for binary search)
     quicksort(values)
+    // Or, use the library function (need to import sort if so).
+    //sort.Ints(values)
     printSlice(values, 40)
     fmt.Println("\nN: ", len(values))
     fmt.Println("log2(N): ", math.Log2(float64(len(values))), "\n" )
@@ -79,6 +81,7 @@ func main() {
 // Also returns the number of tests.
 func binarySearch(values []int, target int) (mid, numTests int) {
     
+    // Set starting index for left and right.
     l := 0
     r := len(values) - 1
     for l <= r {

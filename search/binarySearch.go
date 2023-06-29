@@ -16,6 +16,7 @@ import (
     "fmt"
     "math"
     "math/rand"
+    "sort"
     "strconv"
     "time"
 )
@@ -23,11 +24,19 @@ import (
 func main() {
     
     // Get the number of items and maximum item value.
-    var num_items, max int;
+    var num_items, max int
+    var useLib string
     fmt.Printf("# Items: ")
     fmt.Scanln(&num_items)
     fmt.Printf("Max: ")
     fmt.Scanln(&max)
+    
+    useLibSort := false
+    fmt.Printf("Use library sort.Ints? (y or n (default): ")
+    fmt.Scanln(&useLib)
+    if useLib == "y" {
+        useLibSort = true
+    }
     
     // Make and display the slice of random ints.
     values := makeRandomSlice(num_items, max)
@@ -35,9 +44,14 @@ func main() {
     fmt.Println()
     
     // Sort the array first (necessary for binary search)
-    quicksort(values)
-    // Or, use the library function (need to import sort if so).
-    //sort.Ints(values)
+    if useLibSort {
+        // Use the Golang sort package.
+        sort.Ints(values)
+    } else {
+        // Use the homegrown quicksort.
+        quicksort(values)
+    }
+    
     printSlice(values, 40)
     fmt.Println("\nN: ", len(values))
     fmt.Println("log2(N): ", math.Log2(float64(len(values))), "\n" )

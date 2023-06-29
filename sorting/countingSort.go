@@ -100,14 +100,16 @@ func makeRandomSlice(numItems, max int) []Customer {
 
 // Prints the first numItems of the Customer slice.
 func printSlice(arr []Customer, numItems int) {
+    closer := "...]\n"
     if (len(arr) < numItems) {
         numItems = len(arr)
+        closer = "]\n"
     }
     fmt.Print("[ ")
     for i := 0; i < numItems; i++ {
         fmt.Print(arr[i], " ")
     }
-    fmt.Print("]\n")
+    fmt.Print(closer)
 }
 
 
@@ -122,4 +124,5 @@ func checkSorted(arr []Customer) {
     }
     fmt.Println("The array is sorted")
 }
+
 

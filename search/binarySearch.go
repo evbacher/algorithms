@@ -1,6 +1,6 @@
 
 /*
- Binary sort. Uses quicksort to sort the array first.
+ Binary sort. Uses quicksort or sort.Ints() to sort the array first.
  There is a good discussion (and animation) in the Wikipedia article:
  https://en.wikipedia.org/wiki/Binary_search_algorithm.
  
@@ -46,9 +46,11 @@ func main() {
     // Sort the array first (necessary for binary search)
     if useLibSort {
         // Use the Golang sort package.
+        fmt.Println("Using sort.Ints().")
         sort.Ints(values)
     } else {
         // Use the homegrown quicksort.
+        fmt.Println("Using local quicksort.")
         quicksort(values)
     }
     
@@ -103,7 +105,7 @@ func binarySearch(values []int, target int) (mid, numTests int) {
         // There is an interesting story about a bug in calculating the midpoint at
         // https://ai.googleblog.com/2006/06/extra-extra-read-all-about-it-nearly.html
         // Only a problem when l and r are both very large (2^30).
-        // mid = (l + r)/2
+        // mid = (l + r)/2  //(this is where the bug can show up)
         mid = (l + r) >> 1
         if values[mid] < target {
             l = mid + 1

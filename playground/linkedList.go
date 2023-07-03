@@ -41,45 +41,23 @@ func main() {
 // for testing...
 func test() {
     // Create some Items.
-    aItem = Item { "Apple", nil }
-    bItem = Item { data: "Banana" }
+    aItem := Item { "Apple", nil }
+    bItem := Item { data: "Banana" }
     aItem.next = &bItem
-    //top := &aItem
-
-    cItem = Item { "Cherry", nil }
-    dItem = Item {"Date", nil}
-
-    /*
-    // Print the list.
-    for item := top; item != nil; item = item.next {
-        fmt.Printf("%s ", item.data)
-    }
-    fmt.Println()
+    cItem := Item { "Cherry", nil }
+    dItem := Item {"Date", nil}
     
-    
-    //aItem.deleteAfter()
-    cItem.deleteAfter()
-    for item := top; item != nil; item = item.next {
-        fmt.Printf("%s ", item.data)
-    }
-    fmt.Println()
-    */
-    
-
     fmt.Println("using makeLinkedList now")
     list := makeLinkedList()
     list.sentinel.addAfter(&aItem)
-    fmt.Println(list.toString(" "))
     aItem.addAfter(&bItem)
-    fmt.Println(list.toString(" "))
     bItem.addAfter(&cItem)
-    fmt.Println(list.toString(" "))
     cItem.addAfter(&dItem)
     fmt.Println(list.toString(" "))
 
     // add a copy of aItem  (not a reference to the original aItem)
     anotherItem := aItem
-    fmt.Println(anotherItem)
+    fmt.Println("Adding a new copy of ",aItem,": ",anotherItem,"after",cItem)
     cItem.addAfter(&anotherItem)
     
     fmt.Println("\nlist before addRange:")
@@ -87,17 +65,13 @@ func test() {
     
     // Create an array of new string data.
     newData := []string{"kiwis!", "prunes!", "dates"}
-    //newData := []string{"kiwis!"}
     list.addRange(newData)
     
-    // Just printing in a loop.
+    // Examine the list.
     fmt.Println("\nlist AFTER addRange:")
     fmt.Println(list.toString(" "))
 
 }
-
-// These probably don't really need to be global scope.
-var aItem, bItem, cItem, dItem Item
 
 type Item struct {
     data    string
@@ -120,11 +94,8 @@ func makeLinkedList() LinkedList {
 // Adds an Item after me.
 func (me *Item) addAfter(after *Item) {
     // Order matters here -- set after.next first.
-    fmt.Println("\n",me,"calling addAfter(",after,")")
-    fmt.Println("before:",me,after)
     after.next = me.next
     me.next = after
-    fmt.Println("after:",me,after)
 }
 
 // Deletes the Item after me and returns the deleted Item
@@ -157,7 +128,7 @@ func (list *LinkedList) addRange(values []string) {
     // First, find the last item.
     // lastItem is a reference to the last item.
     // Correct version of the loop to find the last item
-    // (let item be a pointer to an Item):
+    // (let item be a pointer to an Item, not a copy of an Item):
     var lastItem *Item
     for item := list.sentinel; ; item = item.next {
         if item.next == nil {
@@ -169,11 +140,8 @@ func (list *LinkedList) addRange(values []string) {
 	for _, v := range values {
 	    // Create a brand new Item to add to the end of the list.
         newItem := Item{v, nil}
-        // Point to the new Item.
         lastItem.addAfter(&newItem)
-        // Make the new Item the last Item. 
         lastItem = &newItem
-        fmt.Println("lastItem: ", lastItem)
     }
 }
 
@@ -181,6 +149,7 @@ func (list *LinkedList) toString(separator string) string {
     listString := ""
     for item := list.sentinel.next; item != nil; item = item.next {
         listString += item.data
+        // Optional: add item.next to the output.
         //listString  += "," + fmt.Sprint(item.next)
         if item.next != nil {
             listString += separator

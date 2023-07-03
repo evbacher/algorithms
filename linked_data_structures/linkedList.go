@@ -36,7 +36,7 @@ func main() {
    }
 }
 
-// for testing...
+// for development testing...
 func test() {
     // Create some Items.
     aItem := Item { "Apple", nil }
@@ -132,7 +132,7 @@ func (me *Item) deleteAfter() *Item {
     return after
 }
 
-// Create items for the slice of strings and add them to the list.
+// Creates Items for the slice of strings and adds them to the list.
 func (list *LinkedList) addRange(values []string) {
     
     // First, find the last item.

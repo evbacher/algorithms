@@ -6,7 +6,6 @@ package main
 
 import "fmt"
 
-
 func main() {
    // small_list_test()
    
@@ -59,7 +58,6 @@ func test() {
     bItem.addAfter(nil)
     fmt.Println(list.toString(" "))
     
-
     // add a copy of aItem  (not a reference to the original aItem)
     anotherItem := aItem
     fmt.Println("Adding a new copy of ",aItem,": ",anotherItem,"after",cItem)
@@ -195,7 +193,6 @@ func (list *LinkedList) pop() string {
     topItem := list.sentinel.deleteAfter()
     return topItem.data
 }
-
 
 // There are several other useful functions you can add for lists:
 // contains(), find(), remove(), removeAt(), append(), addList(), 

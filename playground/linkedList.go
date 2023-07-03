@@ -6,9 +6,12 @@ package main
 
 import "fmt"
 
-/*
+
 func main() {
    // small_list_test()
+   
+   // development testing
+   //test()
 
    // Make a list from a slice of values.
    greek_letters := []string {
@@ -16,7 +19,7 @@ func main() {
    }
    list := makeLinkedList()
    list.addRange(greek_letters)
-   fmt.Println(list.to_string(" "))
+   fmt.Println(list.toString(" "))
    fmt.Println()
 
    // Demonstrate a stack.
@@ -32,13 +35,8 @@ func main() {
            stack.toString(" "))
    }
 }
-*/
 
-func main() {
-    test()
-}
-
-// for testing...
+// for development testing...
 func test() {
     // Create some Items.
     aItem := Item { "Apple", nil }
@@ -82,11 +80,11 @@ func test() {
     
     mango := Item{"mango", nil}
     fmt.Println("pushing", mango)
-    list.push(&mango)
+    list.push("mango")
     fmt.Println(list.toString(" "))
     
     fmt.Println("\nTry pushing nil.")
-    list.push(nil)
+    list.push("")
     
     top := list.pop()
     fmt.Println("top:", top)
@@ -186,12 +184,10 @@ func (list *LinkedList) isEmpty() bool {
 }
 
 // Adds a new Item to the front of the list (top of the stack).
-func (list *LinkedList) push(item *Item) {
-    // Don't push a nil Item.
-    if item == nil {
-        return
-    }
-    list.sentinel.addAfter(item)
+func (list *LinkedList) push(data string) {
+    // Create a new Item using data.
+    item := Item{data, nil}
+    list.sentinel.addAfter(&item)
 }
 
 // Removes the Item at the front of the list and returns its string value.

@@ -49,11 +49,18 @@ func test() {
     
     fmt.Println("using makeLinkedList now")
     list := makeLinkedList()
+    fmt.Println("is list empty?", list.isEmpty())
     list.sentinel.addAfter(&aItem)
+    fmt.Println("is list empty?", list.isEmpty())
     aItem.addAfter(&bItem)
     bItem.addAfter(&cItem)
     cItem.addAfter(&dItem)
     fmt.Println(list.toString(" "))
+    
+    fmt.Println("Try to add nil.")
+    bItem.addAfter(nil)
+    fmt.Println(list.toString(" "))
+    
 
     // add a copy of aItem  (not a reference to the original aItem)
     anotherItem := aItem
@@ -62,6 +69,7 @@ func test() {
     
     fmt.Println("\nlist before addRange:")
     fmt.Println(list.toString(" "))
+    fmt.Println("length", list.length())
     
     // Create an array of new string data.
     newData := []string{"kiwis!", "prunes!", "dates"}
@@ -70,7 +78,19 @@ func test() {
     // Examine the list.
     fmt.Println("\nlist AFTER addRange:")
     fmt.Println(list.toString(" "))
-
+    fmt.Println("length", list.length())
+    
+    mango := Item{"mango", nil}
+    fmt.Println("pushing", mango)
+    list.push(&mango)
+    fmt.Println(list.toString(" "))
+    
+    fmt.Println("\nTry pushing nil.")
+    list.push(nil)
+    
+    top := list.pop()
+    fmt.Println("top:", top)
+    fmt.Println(list.toString(" "))
 }
 
 type Item struct {
@@ -93,6 +113,9 @@ func makeLinkedList() LinkedList {
 
 // Adds an Item after me.
 func (me *Item) addAfter(after *Item) {
+    if after == nil {
+        return
+    }
     // Order matters here -- set after.next first.
     after.next = me.next
     me.next = after
@@ -113,17 +136,6 @@ func (me *Item) deleteAfter() *Item {
 
 // Create items for the slice of strings and add them to the list.
 func (list *LinkedList) addRange(values []string) {
-    // First, find the last item.
-    // lastItem is a reference to the last item.
-    /*
-    var lastItem *Item
-    for item := *list.sentinel; ; item = *item.next {
-        if item.next == nil {
-            lastItem = &item
-            break
-        }
-    }
-    */
     
     // First, find the last item.
     // lastItem is a reference to the last item.
@@ -145,11 +157,12 @@ func (list *LinkedList) addRange(values []string) {
     }
 }
 
+// Returns a string with the data contained in each Item, separated by separator.
 func (list *LinkedList) toString(separator string) string {
     listString := ""
     for item := list.sentinel.next; item != nil; item = item.next {
         listString += item.data
-        // Optional: add item.next to the output.
+        // Option: add item.next to the string.
         //listString  += "," + fmt.Sprint(item.next)
         if item.next != nil {
             listString += separator
@@ -157,3 +170,37 @@ func (list *LinkedList) toString(separator string) string {
     }
     return listString
 }
+
+// Returns the length of the list (not counting the sentinel).
+func (list *LinkedList) length() int {
+    length := 0
+    for item := list.sentinel.next; item != nil; item = item.next {
+        length++
+    }
+    return length
+}
+
+// Returns true if the list is empty.
+func (list *LinkedList) isEmpty() bool {
+    return list.sentinel.next == nil
+}
+
+// Adds a new Item to the front of the list (top of the stack).
+func (list *LinkedList) push(item *Item) {
+    // Don't push a nil Item.
+    if item == nil {
+        return
+    }
+    list.sentinel.addAfter(item)
+}
+
+// Removes the Item at the front of the list and returns its string value.
+func (list *LinkedList) pop() string {
+    topItem := list.sentinel.deleteAfter()
+    return topItem.data
+}
+
+
+// There are several other useful functions you can add for lists:
+// contains(), find(), remove(), removeAt(), append(), addList(), 
+// toSlice(), clone(), clear().

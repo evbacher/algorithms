@@ -86,8 +86,8 @@ func test() {
     fmt.Println(list.toString(" "))
     
     // Create an array of new string data.
-    //newData := []string{"kiwis!", "prunes!", "dates"}
-    newData := []string{"kiwis!"}
+    newData := []string{"kiwis!", "prunes!", "dates"}
+    //newData := []string{"kiwis!"}
     list.addRange(newData)
     
     // Just printing in a loop.
@@ -144,6 +144,7 @@ func (me *Item) deleteAfter() *Item {
 func (list *LinkedList) addRange(values []string) {
     // First, find the last item.
     // lastItem is a reference to the last item.
+    /*
     var lastItem *Item
     for item := *list.sentinel; ; item = *item.next {
         if item.next == nil {
@@ -151,19 +152,25 @@ func (list *LinkedList) addRange(values []string) {
             break
         }
     }
-    fmt.Print("\nFOUND lastItem: ")
-    fmt.Println(lastItem)
+    */
     
+    // First, find the last item.
+    // lastItem is a reference to the last item.
+    // Correct version of the loop to find the last item
+    // (let item be a pointer to an Item):
+    var lastItem *Item
+    for item := list.sentinel; ; item = item.next {
+        if item.next == nil {
+            lastItem = item
+            break
+        }
+    }
     // Now, add new Items to the end of the list.
 	for _, v := range values {
 	    // Create a brand new Item to add to the end of the list.
         newItem := Item{v, nil}
         // Point to the new Item.
-        // It looks like lastItem has the correct
-        // pointer to the newItem, but the newItem is not getting added to the list.
         lastItem.addAfter(&newItem)
-        fmt.Println("after adding ", newItem, ": ", list.toString(" "))
-        fmt.Println("lastItem: ", lastItem)
         // Make the new Item the last Item. 
         lastItem = &newItem
         fmt.Println("lastItem: ", lastItem)
@@ -174,7 +181,7 @@ func (list *LinkedList) toString(separator string) string {
     listString := ""
     for item := list.sentinel.next; item != nil; item = item.next {
         listString += item.data
-        listString  += "," + fmt.Sprint(item.next)
+        //listString  += "," + fmt.Sprint(item.next)
         if item.next != nil {
             listString += separator
         }

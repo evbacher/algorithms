@@ -11,6 +11,19 @@ import (
     "reflect" // for reflect.TypeOf()
 )
 
+// Item for use in a doubly-linked list.
+type Item struct {
+    data    string
+    prev    *Item
+    next    *Item
+}
+
+// A doubly-linked list starts off with two sentinels.
+type DoublyLinkedList struct {
+    topSentinel     *Item
+    bottomSentinel  *Item 
+}
+
 func main() {
 
     // milestone test for basic list functionality   
@@ -135,19 +148,6 @@ func queueTests() {
         fmt.Printf("%s ", deque.popBottom())
     }
     fmt.Printf("\n")
-}
-
-// Item for use in a doubly-linked list.
-type Item struct {
-    data    string
-    prev    *Item
-    next    *Item
-}
-
-// A doubly-linked list starts off with two sentinels.
-type DoublyLinkedList struct {
-    topSentinel     *Item
-    bottomSentinel  *Item 
 }
 
 // Some DoublyLinkedList functions.
@@ -333,3 +333,4 @@ func (list *DoublyLinkedList) hasLoop() bool {
 // There are several other useful functions you can add for lists:
 // contains(), find(), remove(), removeAt(), append(), addList(), 
 // toSlice(), clone(), clear().
+

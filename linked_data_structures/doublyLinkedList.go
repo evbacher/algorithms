@@ -16,8 +16,8 @@ func main() {
     // milestone test for basic list functionality   
     //smallListTest()
     
-    // milestone test for loop detection
-    //loopTest()
+    // milestone test for loop detection (in doubly-linked lists)
+    loopTest()
     
     // development testing
     //testList()
@@ -61,6 +61,45 @@ func dlltest() {
     }
     list.addRange(animals)
     fmt.Println(list.toString(" "))
+}
+
+// Milestone test for loop detection.
+func loopTest () {
+    // Make a list from a slice of values.
+    values := []string {
+        "0", "1", "2", "3", "4", "5",
+    }
+    list := makeDoublyLinkedList()
+    list.addRange(values)
+
+    fmt.Println(list.toString(" "))
+    if list.hasLoop() {
+        fmt.Println("Has loop")
+    } else {
+        fmt.Println("No loop")
+    }
+    fmt.Println()
+
+    // Make cell 5 point to cell 2.
+    list.topSentinel.next.next.next.next.next.next = list.topSentinel.next.next
+
+    fmt.Println(list.toStringMax(" ", 10))
+    if list.hasLoop() {
+        fmt.Println("Has loop")
+    } else {
+        fmt.Println("No loop")
+    }
+    fmt.Println()
+
+    // Make cell 4 point to cell 2.
+    list.topSentinel.next.next.next.next.next = list.topSentinel.next.next
+
+    fmt.Println(list.toStringMax(" ", 10))
+    if list.hasLoop() {
+        fmt.Println("Has loop")
+    } else {
+        fmt.Println("No loop")
+    }
 }
 
 func queueTests() {
@@ -269,17 +308,14 @@ func (list *DoublyLinkedList) popTop() string {
     return list.pop()
 }
 
-
-
-
-/*
+// Tests for loop in doubly-linked list.
 // Returns true if list has a loop, false otherwise.
 func (list *DoublyLinkedList) hasLoop() bool {
     
-    fast, slow := list.sentinel, list.sentinel
+    fast, slow := list.topSentinel, list.topSentinel
     for {
         // Check for end of list first.
-        if slow == nil || fast == nil || fast.next == nil {
+        if slow == list.bottomSentinel || fast == list.bottomSentinel || fast.next == list.bottomSentinel {
             return false
         }
         // Not at end: advance pointers.
@@ -292,7 +328,7 @@ func (list *DoublyLinkedList) hasLoop() bool {
         }
     }
 }
-*/
+
 
 // There are several other useful functions you can add for lists:
 // contains(), find(), remove(), removeAt(), append(), addList(), 

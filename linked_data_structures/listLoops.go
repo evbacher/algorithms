@@ -272,17 +272,11 @@ func (list *LinkedList) hasLoop() bool {
     for {
         
         // Note that we need to make sure we're not using a nil pointer.
-        if slow != nil {
-            slow = slow.next
-        } else {
+        if slow == nil || fast == nil || fast.next == nil {
             return false
         }
-        
-        if fast != nil && fast.next !=nil {
-            fast = fast.next.next
-        } else {
-            return false
-        }
+        slow = slow.next
+        fast = fast.next.next
         
         if fast == slow {
             return true

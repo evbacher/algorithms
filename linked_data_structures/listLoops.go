@@ -267,17 +267,16 @@ func (list *LinkedList) pop() string {
 func (list *LinkedList) hasLoop() bool {
     
     fast, slow := list.sentinel, list.sentinel
-    
-
     for {
-        
-        // Note that we need to make sure we're not using a nil pointer.
+        // Check for end of list first.
         if slow == nil || fast == nil || fast.next == nil {
             return false
         }
+        // Not at end: advance pointers.
         slow = slow.next
         fast = fast.next.next
         
+        // fast looped around.
         if fast == slow {
             return true
         }

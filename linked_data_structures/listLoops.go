@@ -7,6 +7,15 @@ package main
 
 import "fmt"
 
+type Item struct {
+    data    string
+    next    *Item
+}
+
+type LinkedList struct {
+    sentinel    *Item
+}
+
 func main() {
 
     // milestone test for basic list functionality   
@@ -135,15 +144,6 @@ func testList() {
     top := list.pop()
     fmt.Println("top:", top)
     fmt.Println(list.toString(" "))
-}
-
-type Item struct {
-    data    string
-    next    *Item
-}
-
-type LinkedList struct {
-    sentinel    *Item
 }
 
 // Some LinkedList functions.
@@ -286,3 +286,4 @@ func (list *LinkedList) hasLoop() bool {
 // There are several other useful functions you can add for lists:
 // contains(), find(), remove(), removeAt(), append(), addList(), 
 // toSlice(), clone(), clear().
+

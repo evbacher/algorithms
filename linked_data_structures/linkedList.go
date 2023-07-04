@@ -6,6 +6,17 @@ package main
 
 import "fmt"
 
+type Item struct {
+    data    string
+    next    *Item
+}
+
+type LinkedList struct {
+    sentinel    *Item
+}
+
+/*** main() and test function. ***/
+
 func main() {
    // small_list_test()
    
@@ -89,16 +100,7 @@ func test() {
     fmt.Println(list.toString(" "))
 }
 
-type Item struct {
-    data    string
-    next    *Item
-}
-
-type LinkedList struct {
-    sentinel    *Item
-}
-
-// Some LinkedList functions.
+// *** Some LinkedList functions. ***
 
 // Creates a new LinkedList and initializes its sentinel.
 func makeLinkedList() LinkedList {
@@ -197,3 +199,4 @@ func (list *LinkedList) pop() string {
 // There are several other useful functions you can add for lists:
 // contains(), find(), remove(), removeAt(), append(), addList(), 
 // toSlice(), clone(), clear().
+

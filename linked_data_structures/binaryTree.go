@@ -40,6 +40,7 @@ func test() {
     fmt.Println("Preorder:     ", tree.preorder())
     fmt.Println("Inorder:      ", tree.inorder())
     fmt.Println("Postorder:    ", tree.postorder())
+    fmt.Println("Breadth first:", tree.breadthFirst())
 }
 
 // Builds a tree and returns the root Node.
@@ -159,6 +160,33 @@ func (node *Node) postorder() string {
     return result
 }
 
+// Traverses the nodes breadth-first. Each generation before the next.
+// Returns string representation of the tree from this node.
+// Test output: Breadth first: A B C D E F G H I J
+func (node *Node) breadthFirst() string {
+    
+    q := makeDoublyLinkedList()
+    result := ""
+    
+    // Do parent node first.
+    q.enqueue(node)
+    for !q.isEmpty() {
+        node = q.dequeue()
+        result += node.data
+        // check child nodes
+        if node.left != nil {
+            q.enqueue(node.left)
+        }
+        if node.right != nil {
+            q.enqueue(node.right)
+        }
+        if !q.isEmpty() {
+            result += " "
+        }
+    }
+    return result
+}
+
 // *** We need a queue to do breadthFirst traverse. ***
 // Will repurpose some other queue code, but should probably
 // make a generic Queue to handle this. Exercise left for the reader (me).
@@ -251,12 +279,9 @@ func (list *DoublyLinkedList) enqueue(node *Node) {
 
 // Removes the Item at the bottom of the list and returns its string value.
 func (list* DoublyLinkedList) dequeue() *Node {
-    //last := (list.bottomSentinel).prev.delete()
-    //return last.data
-    
-    // More concise, but maybe less readable.
     if list.isEmpty() {
         return nil
     }
     return (list.bottomSentinel).prev.delete().data
 }
+

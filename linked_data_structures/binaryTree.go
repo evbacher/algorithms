@@ -15,6 +15,19 @@ type Node struct {
     right   *Node
 }
 
+// Item for use in a doubly-linked list of nodes. data is *Node.
+type Item struct {
+    data    *Node
+    prev    *Item
+    next    *Item
+}
+
+// A doubly-linked list for building queues of Items.
+type DoublyLinkedList struct {
+    topSentinel     *Item
+    bottomSentinel  *Item 
+}
+
 func main() {
     // dev testing
     test()
@@ -144,4 +157,106 @@ func (node *Node) postorder() string {
     result += node.data
     
     return result
+}
+
+// *** We need a queue to do breadthFirst traverse. ***
+// Will repurpose some other queue code, but should probably
+// make a generic Queue to handle this. Exercise left for the reader (me).
+
+// *** Some DoublyLinkedList functions, repurposed to hold *Node.***
+
+// Creates a new DoublyLinkedList and initializes its sentinels to point to each other.
+// Note that a doubly linked list should have no nil pointers (no end).
+func makeDoublyLinkedList() DoublyLinkedList {
+    // Create list and empty sentinels.
+    list := DoublyLinkedList {}
+    list.topSentinel = &Item {nil, nil, nil}
+    list.bottomSentinel = &Item{nil, nil, nil}
+    
+    // Point the sentinels to each other.
+    (list.topSentinel).prev, (list.topSentinel).next = 
+        list.bottomSentinel, list.bottomSentinel
+    (list.bottomSentinel).prev, (list.bottomSentinel).next = 
+        list.topSentinel, list.topSentinel
+
+    return list
+}
+
+// Adds an Item after me.
+func (me *Item) addAfter(after *Item) {
+    if after == nil {
+        return
+    }
+    // Order matters. Set after pointers first.
+    after.prev, after.next = me, me.next
+    (me.next).prev, me.next = after, after
+}
+
+// Adds an item before me.
+func (me *Item) addBefore(before *Item) {
+    if before == nil {
+        return
+    }
+    // Set pointers for before, then use addAfter to put things in the correct order.
+    before.prev, before.next = me.prev, me
+    (me.prev).addAfter(before)
+}
+
+// Deletes the current Item.
+func (me *Item) delete() *Item {
+    // Deal me out.
+    (me.prev).next = me.next
+    (me.next).prev = me.prev
+    return me
+}
+
+// Returns the length of the list (not counting the sentinel).
+func (list *DoublyLinkedList) length() int {
+    length := 0
+    for item := list.topSentinel.next; item != list.bottomSentinel; item = item.next {
+        length++
+    }
+    return length
+}
+
+// Returns true if the list is empty.
+func (list *DoublyLinkedList) isEmpty() bool {
+    return list.topSentinel.next == list.bottomSentinel
+}
+
+// List function: push() and pop().
+
+// Adds a new Item to the front of the list (top of the stack).
+func (list *DoublyLinkedList) push(node *Node) {
+    // Create a new Item using inorder.
+    item := Item{data: node}
+    list.topSentinel.addAfter(&item)
+}
+
+// Removes the Item at the front of the list and returns its data.
+func (list *DoublyLinkedList) pop() *Node {
+    if list.isEmpty() {
+        return nil
+    }
+    topItem := (list.topSentinel.next).delete()
+    return topItem.data
+}
+
+// *** Queue functions (for the bottom of the list). ***
+
+// Uses push() to add an Item to the front of the list.
+func (list *DoublyLinkedList) enqueue(node *Node) {
+    list.push(node)
+}
+
+// Removes the Item at the bottom of the list and returns its string value.
+func (list* DoublyLinkedList) dequeue() *Node {
+    //last := (list.bottomSentinel).prev.delete()
+    //return last.data
+    
+    // More concise, but maybe less readable.
+    if list.isEmpty() {
+        return nil
+    }
+    return (list.bottomSentinel).prev.delete().data
 }

@@ -272,12 +272,14 @@ func (list *DoublyLinkedList) pop() string {
 
 // Queue functions (for the bottom of the list)
 
-// Uses push() to add an Item to the front of the list.
+// Uses push() to add an Item to the back of the line (queue)
+// (which is the front of the underlying list).
 func (list *DoublyLinkedList) enqueue(data string) {
     list.push(data)
 }
 
-// Removes the Item at the bottom of the list and returns its string value.
+// Removes the next Item at the front of the line 
+// (bottom of the underlying list) and returns its string value.
 func (list* DoublyLinkedList) dequeue() string {
     //last := (list.bottomSentinel).prev.delete()
     //return last.data
@@ -286,24 +288,24 @@ func (list* DoublyLinkedList) dequeue() string {
     return (list.bottomSentinel).prev.delete().data
 }
 
-// Dequeue functions (both top and bottom of the list).
+// Deque (deck) functions (both top and bottom of the list).
 
-// Adds a data Item to the bottom of the dequeue.
+// Adds a data Item to the bottom of the deque.
 func (list *DoublyLinkedList) pushBottom(data string) {
     (list.bottomSentinel).addBefore(&Item{data, nil, nil})
 }
 
-// Removes an Item from the bottom of the dequeue and returns the data.
+// Removes an Item from the bottom of the deque and returns the data.
 func (list *DoublyLinkedList) popBottom() string {
     return list.dequeue()
 }
 
-// Adds a data Item to the top of the dequeue.
+// Adds a data Item to the top of the deque.
 func (list *DoublyLinkedList) pushTop(data string) {
     list.enqueue(data)
 }
 
-// Removes an Item from the top of the dequeue and returns the data.
+// Removes an Item from the top of the deque and returns the data.
 func (list *DoublyLinkedList) popTop() string {
     return list.pop()
 }
@@ -333,4 +335,5 @@ func (list *DoublyLinkedList) hasLoop() bool {
 // There are several other useful functions you can add for lists:
 // contains(), find(), remove(), removeAt(), append(), addList(), 
 // toSlice(), clone(), clear().
+
 

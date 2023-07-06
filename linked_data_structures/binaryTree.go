@@ -165,15 +165,21 @@ func (node *Node) postorder() string {
 // Test output: Breadth first: A B C D E F G H I J
 func (node *Node) breadthFirst() string {
     
+    // We'll use a DoublyLinkedList as a queue.
+    // Think of q.enqueue as joining the back of the line.
+    // q.dequeue is getting to the front of the line and leaving.
+    // A queue is a FIFO (first in, first out) list.
     q := makeDoublyLinkedList()
     result := ""
     
-    // Do parent node first.
+    // Do parent node first. Add to the back of the queue.
     q.enqueue(node)
+    
+    // Now, take nodes from the front of the q if present, then add children, left to right.
     for !q.isEmpty() {
         node = q.dequeue()
         result += node.data
-        // check child nodes
+        // check child nodes and add to q if present
         if node.left != nil {
             q.enqueue(node.left)
         }
@@ -181,6 +187,7 @@ func (node *Node) breadthFirst() string {
             q.enqueue(node.right)
         }
         if !q.isEmpty() {
+            //fmt.Println("result:", result)
             result += " "
         }
     }
@@ -270,14 +277,15 @@ func (list *DoublyLinkedList) pop() *Node {
     return topItem.data
 }
 
-// *** Queue functions (for the bottom of the list). ***
+// *** Queue functions (using a DoublyLinked List as the underlying data structure). ***
 
-// Uses push() to add an Item to the front of the list.
+// Uses push() to add an Item to the queue.
 func (list *DoublyLinkedList) enqueue(node *Node) {
     list.push(node)
 }
 
-// Removes the Item at the bottom of the list and returns its string value.
+// Removes the next Item ready to leave the queue
+// (from the bottom of the underlying list).
 func (list* DoublyLinkedList) dequeue() *Node {
     if list.isEmpty() {
         return nil

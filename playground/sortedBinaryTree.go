@@ -56,6 +56,17 @@ func devTest() {
     root.insertValue("Q")
     root.insertValue("M")
 
+    // Add F.
+    root.insertValue("F")
+    
+    // Add 237
+    root.insertValue("237")
+    
+    // Add some more things
+    root.insertValue("abc")
+    root.insertValue("ABC")
+    root.insertValue("abcd")
+
     // If the tree has any values, they will start at root.right.
     if (root.right != nil) {
         fmt.Printf("Sorted values: %s\n", root.right.inorder())
@@ -64,6 +75,24 @@ func devTest() {
     }
     
     fmt.Printf("tree: %s\n", root.inorder())
+    
+    // now, test find
+    // Let the user search for values.
+    for {
+        // Get the target value.
+        target := ""
+        fmt.Printf("String: ")
+        fmt.Scanln(&target)
+        if len(target) == 0 { break }
+
+        // Find the value's node.
+        node := root.findValue(target)
+        if node == nil {
+            fmt.Printf("%s not found\n", target)
+        } else {
+            fmt.Printf("Found value %s\n", target)
+        }
+    }
 }
 
 func sortedTreeTest() {
@@ -122,51 +151,51 @@ func treeTest() {
 // If value already exists, no insertion takes place.
 func (node *Node) insertValue(value string) {
     
-    fmt.Println("\nTHIS Node:", node)
-    fmt.Println("Trying to insert Node for", value)
+    //fmt.Println("\nTHIS Node:", node)
+    //fmt.Println("Trying to insert Node for", value)
     
     // display current tree (before insertion)
-    fmt.Println("current node:", node.data)
-    fmt.Printf("Current tree: %s\n", node.inorder())
+    //fmt.Println("current node:", node.data)
+    //fmt.Printf("Current tree: %s\n", node.inorder())
     
     newNode := &Node{ value, nil, nil }
-    fmt.Println("newNode:", newNode)
+    //fmt.Println("newNode:", newNode)
     
     // I'm doing something stupid. I just don't know what it is yet.
     // (it was a } in the wrong place!)
     // Compare current Node data to value.
     current := node.data
-    fmt.Println("current:", current)
-    fmt.Println("node:", node)
+    //fmt.Println("current:", current)
+    //fmt.Println("node:", node)
     if current == "" {
-        fmt.Println("at root")
-        fmt.Println("value < current:", value < current)
-        fmt.Println("value > current:", value > current)
+        //fmt.Println("at root")
+        //fmt.Println("value < current:", value < current)
+        //fmt.Println("value > current:", value > current)
     }
     if value < current {
-        fmt.Println("node.left:", node.left)
+        //fmt.Println("node.left:", node.left)
         if node.left == nil {
             node.left = newNode
-            fmt.Println("BEFORE: node.left:", &node.left)
-            fmt.Println("node.left:", &node.left)
-            fmt.Println("AFTER: this node: ", node)
+            //fmt.Println("BEFORE: node.left:", &node.left)
+            //fmt.Println("node.left:", &node.left)
+            //fmt.Println("AFTER: this node: ", node)
             return
         } else {
-            fmt.Println("\ncalling node.left(", value, ")")
+            //fmt.Println("\ncalling node.left(", value, ")")
             (node.left).insertValue(value)
             return
         }
     }
     
     if value > current {
-        fmt.Println("node.right:", node.right)
+        //fmt.Println("node.right:", node.right)
         if node.right == nil {
             node.right = newNode
-            fmt.Println("BEFORE: node.right:", &node.right)
-            fmt.Println("AFTER: this node: ", node)
+            //fmt.Println("BEFORE: node.right:", &node.right)
+            //fmt.Println("AFTER: this node: ", node)
             return
         } else {
-            fmt.Println("\ncalling node.right(", value, ")")
+            //fmt.Println("\ncalling node.right(", value, ")")
             (node.right).insertValue(value)
             return
         }
@@ -177,11 +206,22 @@ func (node *Node) insertValue(value string) {
 func (node *Node) findValue(value string) *Node {
     if value == node.data {
         return node
+        
+    // Check the left side.
     } else if value < node.data {
-        return node.left.findValue(value)
+        if node.left != nil {
+            return node.left.findValue(value)
+        } else {
+            return nil
+        }
     } else {
         // value must be > node.data
-        return node.right.findValue(value)
+        // Check the right side.
+        if node.right != nil {
+            return node.right.findValue(value)
+        } else {
+            return nil
+        }
     }
 }
 
